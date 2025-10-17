@@ -1,6 +1,6 @@
 import os
 import yt_dlp
-from moviepy.editor import VideoFileClip
+from moviepy import VideoFileClip
 
 def download_video(url: str, out_path="data/raw_videos", filename="sample"):
     os.makedirs(out_path, exist_ok=True)

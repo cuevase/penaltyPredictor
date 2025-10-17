@@ -27,7 +27,7 @@ def extract_pose(video_path, save_dir="data/poses"):
             kp = [(lm.x, lm.y) for lm in result.pose_landmarks.landmark]
             kp = normalize_pose(kp)
             keypoints.append(kp)
-
+git
     out_file = os.path.join(save_dir, os.path.basename(video_path).replace(".mp4", "_pose.npy"))
     np.save(out_file, np.array(keypoints))
     print(f"✅ Pose saved at: {out_file}")
