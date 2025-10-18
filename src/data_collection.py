@@ -19,7 +19,7 @@ def download_video(url: str, out_path="data/raw_videos", filename="sample"):
 def trim_video(in_path, start, end, out_path="data/clips"):
     os.makedirs(out_path, exist_ok=True)
     clip = VideoFileClip(in_path)
-    sub = clip.subclip(start, end)
+    sub = clip.subclipped(start, end)
     out_file = f"{out_path}/{os.path.basename(in_path).replace('.mp4','')}_trimmed.mp4"
     sub.write_videofile(out_file, codec="libx264", audio=False)
     print(f"✂️ Trimmed clip saved at: {out_file}")
