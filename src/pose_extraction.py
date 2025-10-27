@@ -1,4 +1,5 @@
 import cv2, mediapipe as mp, numpy as np, os, argparse
+from datetime import datetime
 
 #Normalize pose for different scalings
 def normalize_pose(pose):
@@ -29,13 +30,26 @@ def extract_pose(video_path, save_dir="data/poses"):
             keypoints.append(kp)
 
     cap.release()
-    out_file = os.path.join(save_dir, os.path.basename(video_path).replace(".mp4", "_pose.npy"))
+    
+    # Check if any poses were detected
+    if len(keypoints) == 0:
+        print(f"⚠️  No poses detected in video: {video_path}")
+        return None, 0
+    
+    # Generate unique filename with timestamp
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    base_name = os.path.basename(video_path).replace(".mp4", "")
+    out_file = os.path.join(save_dir, f"{base_name}_pose_{timestamp}.npy")
+    
     np.save(out_file, np.array(keypoints))
-    print(f"✅ Pose saved at: {out_file}")
-    return out_file
+    print(f"✅ Pose saved at: {out_file} ({len(keypoints)} frames with poses)")
+    return out_file, len(keypoints)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--video", type=str, required=True)
     args = parser.parse_args()
-    extract_pose(args.video)
+    pose_file, pose_count = extract_pose(args.video)
+    if pose_file is None:
+        print("❌ No poses detected. Exiting.")
+        exit(1)
