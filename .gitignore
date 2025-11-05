@@ -125,3 +125,10 @@ cython_debug/
 data/
 outputs/
 models/
+
+# Documentation (planning docs)
+MODELS.md
+TRANSFORMER_RATIONALE.md
+PAPER_READING_LIST.md
+IMPLEMENTATION_PLAN.md
+src/training_roadmap.md
